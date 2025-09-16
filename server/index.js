@@ -3,7 +3,8 @@ import { Server } from "socket.io";
 import { instrument } from "@socket.io/admin-ui";
 const io = new Server(3000, {
   cors: {
-    origin: ["*", "https://admin.socket.io"],
+    origin: ["https://admin.socket.io", "http://localhost:5173"],
+    credentials: true,
   },
 });
 io.on("connection", (socket) => {
@@ -21,4 +22,4 @@ io.on("connection", (socket) => {
   });
 });
 
-// instrument(io, { auth: false });
+instrument(io, { auth: false });
