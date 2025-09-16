@@ -8,8 +8,15 @@ const io = new Server(3000, {
 });
 io.on("connection", (socket) => {
   console.log(socket.id);
-  socket.on("send-message", (msg) => {
-    console.log(msg);
-    socket.broadcast.emit("receive-message", msg);
+  socket.on("send-message", (msg, room) => {
+    if (room === "") {
+      socket.broadcast.emit("receive-message", msg);
+    } else {
+      socket.to(room).emit("receive-message", msg);
+    }
+  });
+  socket.on("join-room", (room, cb) => {
+    socket.join(room);
+    cb(`user joined to ${room}`);
   });
 });
