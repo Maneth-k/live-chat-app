@@ -1,9 +1,9 @@
 import { Socket } from "socket.io";
 import { Server } from "socket.io";
-
+import { instrument } from "@socket.io/admin-ui";
 const io = new Server(3000, {
   cors: {
-    origin: "*",
+    origin: ["*", "https://admin.socket.io"],
   },
 });
 io.on("connection", (socket) => {
@@ -20,3 +20,5 @@ io.on("connection", (socket) => {
     cb(`user joined to ${room}`);
   });
 });
+
+// instrument(io, { auth: false });
